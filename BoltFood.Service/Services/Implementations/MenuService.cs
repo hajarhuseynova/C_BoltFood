@@ -18,9 +18,11 @@ namespace BoltFood.Service.Services.Implementations
 
         public async Task ShowMenuAsync()
         {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("                                         BOLT FOOD                           ");
-                Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(1000);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("                                         BOLT FOOD                           ");
+            Thread.Sleep(3000);
+            Console.ForegroundColor = ConsoleColor.White;
             Show();
             int.TryParse(Console.ReadLine(), out int request);
 
@@ -48,7 +50,6 @@ namespace BoltFood.Service.Services.Implementations
                         break;
                     case 7:
                         await CreateProduct();
-
                         break;
                     case 8:
                         await ShowAllProducts();
@@ -66,7 +67,7 @@ namespace BoltFood.Service.Services.Implementations
                         Console.Clear();
                         break;
                     default:
-                        Console.Clear();
+                       Console.ForegroundColor= ConsoleColor.Red;
                         Console.WriteLine("You Must Enter The Right Step");
                         break;
                 }
@@ -90,29 +91,6 @@ namespace BoltFood.Service.Services.Implementations
             Console.WriteLine("11.Remove Product");
             Console.WriteLine("12.Clear");
             Console.WriteLine("0.Left");
-        }
-        private async Task<bool> CheckRestaraunt()
-        {
-            List<Restaurant> restaraunts =await _restaurantService.GetAllAsync();
-            if(restaraunts.Count == 0)
-            {
-                Console.ForegroundColor= ConsoleColor.Red;
-                Console.WriteLine("We have not any Restaurants!");
-                return false;
-            }
-            return true;
-        }
-        private async Task<bool> CheckProduct()
-        {
-            List<Product> products = await _productService.GetAllAsync();
-            if (products.Count == 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("We have not any Products!");
-                return false;
-            }
-            return true;
-
         }
         private bool CheckString(string name)
         {
@@ -143,6 +121,29 @@ namespace BoltFood.Service.Services.Implementations
                 return false;
             }
             return true;
+        }
+        private async Task<bool> CheckRestaurant()
+        {
+            List<Restaurant> restaraunts =await _restaurantService.GetAllAsync();
+            if(restaraunts.Count == 0)
+            {
+                Console.ForegroundColor= ConsoleColor.Red;
+                Console.WriteLine("We have not any Restaurants!");
+                return false;
+            }
+            return true;
+        }
+        private async Task<bool> CheckProduct()
+        {
+            List<Product> products = await _productService.GetAllAsync();
+            if (products.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("We have not any Products!");
+                return false;
+            }
+            return true;
+
         }
         private async Task CreateRestaurant()
         {
@@ -207,6 +208,10 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task GetRestaurantById()
         {
+            if (!await CheckRestaurant())
+            {
+                return;
+            }
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Enter Restaurant's Id:");
             int.TryParse(Console.ReadLine(), out int id);
@@ -219,6 +224,10 @@ namespace BoltFood.Service.Services.Implementations
         private async Task SortRestaurantByRating()
         {
             List<Restaurant> restaurants = await _restaurantService.SortRestaurantByRating();
+            if (!await CheckRestaurant())
+            {
+                return;
+            }
             Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (var items in restaurants)
             {
@@ -227,7 +236,7 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task UpdateRestaurant()
         {
-             if( !await CheckRestaraunt())
+             if( !await CheckRestaurant())
             {
                 return;
             }
@@ -251,7 +260,10 @@ namespace BoltFood.Service.Services.Implementations
         private async Task RemoveRestaurant()
         {
             Console.ForegroundColor = ConsoleColor.White;
-
+            if (!await CheckRestaurant())
+            {
+                return;
+            }
             Console.WriteLine("Enter Restaurant's Id:");
             int.TryParse(Console.ReadLine(), out int id);
 
@@ -328,6 +340,10 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task GetProductById()
         {
+            if (!await CheckProduct())
+            {
+                return;
+            }
             Console.WriteLine("Enter Product's id:");
             int.TryParse(Console.ReadLine(), out int id);
 
@@ -337,7 +353,7 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task UpdateProduct()
         {
-            if (!await CheckRestaraunt())
+            if (!await CheckProduct())
             {
                 return;
             }
@@ -363,7 +379,15 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task RemoveProduct()
         {
+            if (!await CheckProduct())
+            {
+                return;
+            }
             Console.ForegroundColor = ConsoleColor.White;
+            if (!await CheckProduct())
+            {
+                return;
+            }
             Console.WriteLine("Enter Product's Id:");
             int.TryParse(Console.ReadLine(), out int id);
 
