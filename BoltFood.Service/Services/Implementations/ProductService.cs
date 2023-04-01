@@ -49,7 +49,16 @@ namespace BoltFood.Service.Services.Implementations
         public async Task<Product> GetAsync(int id)
         {
             List<Restaurant> Restaurants = await _restaurantRepository.GetAllAsync();
-            foreach(var item in Restaurants)
+            List<Product> products = await GetAllAsync();
+
+            if (products.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("There is not any Product");
+                return null;
+            }
+
+            foreach (var item in Restaurants)
             {
                 Product product=item.Products.Find(x=>x.Id==id);
                 if (product != null)
@@ -82,6 +91,15 @@ namespace BoltFood.Service.Services.Implementations
         public async Task<string> UpdateAsync(int id,string name,double price)
         {
             List<Restaurant> Restaurants = await _restaurantRepository.GetAllAsync();
+
+            List<Product> products = await GetAllAsync();
+
+            if(products.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                return "There is not any Product";
+            }
+
             foreach (var item in Restaurants)
             {
                 Product product = item.Products.Find(x => x.Id == id);
@@ -94,9 +112,10 @@ namespace BoltFood.Service.Services.Implementations
                     return "Succesfully UPDATE";
                 }
             }
-            Console.ForegroundColor = ConsoleColor.Red;
 
+            Console.ForegroundColor = ConsoleColor.Red;
             return "Something wrong!Product is not found";
+            
         }
     }
 }

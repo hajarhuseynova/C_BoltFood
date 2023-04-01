@@ -1,4 +1,5 @@
-﻿using BoltFood.Core.Models.Base;
+﻿using BoltFood.Core.Models;
+using BoltFood.Core.Models.Base;
 using BoltFood.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BoltFood.Data.Repositories
 {
-    public class Repository<T> : IRepository<T> where T:BaseModel
+    public class Repository<T> : IRepository<T> where T : BaseModel
     {
 
 
@@ -36,6 +37,7 @@ namespace BoltFood.Data.Repositories
             Items.Remove(model);
         }
 
+
         public async Task UpdateAsync(T model)
         {
             for(int i = 0; i < Items.Count; i++)
@@ -46,6 +48,9 @@ namespace BoltFood.Data.Repositories
                 }
             }
         }
+
+
+
 
     }
 }

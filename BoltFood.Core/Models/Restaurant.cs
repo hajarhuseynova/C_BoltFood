@@ -15,18 +15,20 @@ namespace BoltFood.Core.Models
 
         public List<Product> Products;
 
-        public Restaurant(string name,RestaurantCategory rstCategory)
+        public double Rating { get; set; }
+        public Restaurant(string name,RestaurantCategory rstCategory,double rating)
         {
             _id++;
             Id = _id;
             Name = name;
             Products = new List<Product>();
             RstCategory = rstCategory;
+            Rating = rating;
         }
 
         public override string ToString()
         {
-            return $"Id:{Id}; Name:{Name}; Category:{RstCategory}"; 
+            return $"Id:{Id}; Name:{Name}; Category:{RstCategory}; Rating:{Rating}"; 
         }
 
 

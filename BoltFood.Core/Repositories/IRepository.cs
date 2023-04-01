@@ -13,10 +13,9 @@ namespace BoltFood.Core.Repositories
         public Task UpdateAsync(T model);
 
         public Task<List<T>> GetAllAsync();
-
         public Task<T> GetAsync(Func<T,bool> expression);
+       
 
-
-
+        
     }
 }

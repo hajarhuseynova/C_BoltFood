@@ -15,10 +15,10 @@ namespace BoltFood.Service.Services.Implementations
     {
 
         private readonly IRestaurantRepository _restaurantRepository = new RestaurantRepository();
-        public async Task<string> CreateAsync(string name,RestaurantCategory RstCategory)
+        public async Task<string> CreateAsync(string name,double rating,RestaurantCategory RstCategory)
         {
 
-            Restaurant Restaurant = new Restaurant(name,RstCategory);
+            Restaurant Restaurant = new Restaurant(name,RstCategory,rating);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             await _restaurantRepository.AddAsync(Restaurant);
             return "Succesfully CREATE";
@@ -37,6 +37,7 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Something wrong!Restaurant is not found!");
+                return null;
             }
             return Restaurant;  
         }
@@ -48,11 +49,19 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Something wrong!Restaurant is not found!");
+                return null;
             }
             await _restaurantRepository.RemoveAsync(Restaurant);
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             return "Succesfully REMOVE";
+        }
+
+        public async Task<List<Restaurant>> SortRestaurantByRating()
+        {
+            List<Restaurant> list = await _restaurantRepository.GetAllAsync();
+            list.Sort((a, b) => b.Rating.CompareTo(a.Rating));  
+            return list;
         }
 
         public async Task<string> UpdateAsync(int id,string name)
@@ -63,6 +72,7 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Something wrong!Restaurant is not found!");
+                return null;
             }
 
             Restaurant.Name = name;
