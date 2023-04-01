@@ -1,4 +1,4 @@
-﻿using BoltFood.Core.Enums;
+﻿ using BoltFood.Core.Enums;
 using BoltFood.Core.Models;
 using BoltFood.Core.Repositories.RestaurantRepository;
 using BoltFood.Data.Repositories.RestaurantRepository;

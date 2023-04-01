@@ -12,12 +12,11 @@ namespace BoltFood.Service.Services.Interfaces
     {
         public Task<string> CreateAsync(string name,double rating,RestaurantCategory RstCategory);
         public Task<string> RemoveAsync(int id);
-
         public Task<string> UpdateAsync(int id,string name);
-
         public Task<List<Restaurant>> GetAllAsync();
         public Task<Restaurant> GetAsync(int id);
-
         public Task<List<Restaurant>> SortRestaurantByRating();
+
+
     }
 }

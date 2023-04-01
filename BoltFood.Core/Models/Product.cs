@@ -27,7 +27,7 @@ namespace BoltFood.Core.Models
         }
         public override string ToString()
         {
-            return $" Product's Id:{Id}; Product's Category:{PrdctCategory}; Product's Name:{Name}; Restaurant's Name:{Restaurant.Name}; Product's Price:{Price}$";
+            return $" Product's Id: {Id}; Product's Category: {PrdctCategory}; Product's Name: {Name}; Restaurant's Name: {Restaurant.Name}; Product's Price: {Price}$;";
         }
     }
 }
