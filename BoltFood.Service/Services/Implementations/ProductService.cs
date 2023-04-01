@@ -25,6 +25,7 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Something wrong!Restaurant is not found!");
+                Console.ForegroundColor = ConsoleColor.White;
                 return null;
             }  
 
@@ -33,6 +34,7 @@ namespace BoltFood.Service.Services.Implementations
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             return "Succesfully CREATE";
+       
         }
 
         public async Task<List<Product>> GetAllAsync()
@@ -55,6 +57,7 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("There is not any Product");
+             
                 return null;
             }
 
@@ -82,6 +85,7 @@ namespace BoltFood.Service.Services.Implementations
                     Console.ForegroundColor = ConsoleColor.Green;
 
                     return "Succesfully REMOVE";
+              
                 }
             }
             Console.ForegroundColor = ConsoleColor.Red;
@@ -98,6 +102,7 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 return "There is not any Product";
+           
             }
 
             foreach (var item in Restaurants)
@@ -110,12 +115,14 @@ namespace BoltFood.Service.Services.Implementations
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     return "Succesfully UPDATE";
+            
                 }
             }
 
             Console.ForegroundColor = ConsoleColor.Red;
             return "Something wrong!Product is not found";
-            
+        
+
         }
     }
 }

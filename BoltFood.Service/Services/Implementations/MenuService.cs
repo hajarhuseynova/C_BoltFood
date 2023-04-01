@@ -15,68 +15,136 @@ namespace BoltFood.Service.Services.Implementations
 
         private readonly IRestaurantService _restaurantService = new RestaurantService();
         private readonly IProductService _productService = new ProductService();
-
         public async Task ShowMenuAsync()
         {
             Thread.Sleep(1000);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("                                         BOLT FOOD                           ");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.White;
-            Show();
-            int.TryParse(Console.ReadLine(), out int request);
+            bool status1 = true;
+            bool status2 = true;
 
-            while (request != 0)
+            while (status1)
             {
-                switch (request)
+                ShowMenu();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Enter your choice: ");
+                string step1 = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
+
+                switch (step1)
                 {
-                    case 1:
-                        await CreateRestaurant();
+                    case "1":
+                        while (status2)
+                        {
+                            ShowRes();
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write("Enter your choice: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            string step2 = Console.ReadLine();
+                            switch (step2)
+                            {
+                                case "1":
+                                    await CreateRestaurant();
+                                    Console.ForegroundColor = ConsoleColor.White;
+
+                                    break;
+                                case "2":
+                                    await ShowAllRestaurants();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "3":
+                                    await GetRestaurantById();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "4":
+                                    await SortRestaurantByRating();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "5":
+                                    await UpdateRestaurant();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "6":
+                                    await RemoveRestaurant();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "7":
+                                    Console.Clear();
+                                    break;
+                                case "0":
+                                    status2 = false;
+                                    break;
+                            }
+
+                        }
+                        status2 = true;
                         break;
-                    case 2:
-                        await ShowAllRestaurants();
+                    case "2":
+                        while (status2)
+                        {
+                            ShowPro();
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write("Enter your choice: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            string step3 = Console.ReadLine();
+                            switch (step3)
+                            {
+                                case "1":
+                                    await CreateProduct();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "2":
+                                    await ShowAllProducts();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "3":
+                                    await GetProductById();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "4":
+                                    await UpdateProduct();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "5":
+                                    await RemoveProduct();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                case "6":
+                                    Console.Clear();
+                                    break;
+                                case "0":
+                                    status2 = false;
+                                    break;
+                            }
+                        }
+                        status2 = true;
                         break;
-                    case 3:
-                        await GetRestaurantById();
-                        break;
-                    case 4:
-                        await SortRestaurantByRating();
-                        break;
-                    case 5:
-                        await UpdateRestaurant();
-                        break;
-                    case 6:
-                        await RemoveRestaurant();
-                        break;
-                    case 7:
-                        await CreateProduct();
-                        break;
-                    case 8:
-                        await ShowAllProducts();
-                        break;
-                    case 9:
-                        await GetProductById();
-                        break;
-                    case 10:
-                        await UpdateProduct();
-                        break;
-                    case 11:
-                        await RemoveProduct();
-                        break;
-                    case 12:
-                        Console.Clear();
+                    case "0":
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Left");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        status1 = false;
                         break;
                     default:
-                       Console.ForegroundColor= ConsoleColor.Red;
-                        Console.WriteLine("You Must Enter The Right Step");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Enter The Right Step!");
+                        Console.ForegroundColor = ConsoleColor.White;
                         break;
                 }
-                Console.ForegroundColor = ConsoleColor.White;
-                Show();
-                int.TryParse(Console.ReadLine(), out request);
             }
         }
-        private void Show()
+        private void ShowMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Menu:");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("1.Restaurant");
+            Console.WriteLine("2.Product");
+            Console.WriteLine("0.Left");
+        }
+        private void ShowRes()
         {
             Console.WriteLine("1.Create Restaurant");
             Console.WriteLine("2.Show All Restaurants");
@@ -84,13 +152,34 @@ namespace BoltFood.Service.Services.Implementations
             Console.WriteLine("4.Sort Restaurant By Rating");
             Console.WriteLine("5.Update Restaurant");
             Console.WriteLine("6.Remove Restaurant");
-            Console.WriteLine("7.Create Product");
-            Console.WriteLine("8.Show All Products");
-            Console.WriteLine("9.Get Product By Id");
-            Console.WriteLine("10.Update Product");
-            Console.WriteLine("11.Remove Product");
-            Console.WriteLine("12.Clear");
-            Console.WriteLine("0.Left");
+            Console.WriteLine("7.Clear");
+            Console.WriteLine("0.Back to Menu");
+        }
+        private void ShowPro()
+        {
+            Console.WriteLine("1.Create Product");
+            Console.WriteLine("2.Show All Products");
+            Console.WriteLine("3.Get Product By Id");
+            Console.WriteLine("4.Update Product");
+            Console.WriteLine("5.Remove Product");
+            Console.WriteLine("6.Clear");
+            Console.WriteLine("0.Back to Menu");
+        }
+
+        private async Task<bool> CheckId(int id)
+        {
+            List<Restaurant> restaurants = await _restaurantService.GetAllAsync();
+            for(int i = 0; i < restaurants.Count; i++)
+            {
+                if(restaurants[i].Id != id)
+                {
+                    Console.ForegroundColor= ConsoleColor.DarkRed;
+                    Console.WriteLine("Wrong ID!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                return false;
+                }
+            }
+            return true;
         }
         private bool CheckString(string name)
         {
@@ -124,15 +213,16 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task<bool> CheckRestaurant()
         {
-            List<Restaurant> restaraunts =await _restaurantService.GetAllAsync();
-            if(restaraunts.Count == 0)
+            List<Restaurant> restaurants = await _restaurantService.GetAllAsync();
+            if (restaurants.Count == 0)
             {
-                Console.ForegroundColor= ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("We have not any Restaurants!");
                 return false;
             }
             return true;
         }
+    
         private async Task<bool> CheckProduct()
         {
             List<Product> products = await _productService.GetAllAsync();
@@ -158,25 +248,29 @@ namespace BoltFood.Service.Services.Implementations
             }
             while (!CheckString(name));
 
-            Console.WriteLine("Choose Restaurant's Category");
-            var Enums = Enum.GetValues(typeof(RestaurantCategory));
-            foreach (var category in Enums)
+            int RstCategory;
+            while (true)
             {
-                Console.WriteLine((int)category + "." + category);
+                    Console.WriteLine("Choose Restaurant's Category");
+                    var Enums = Enum.GetValues(typeof(RestaurantCategory));
 
-            }
-            int.TryParse(Console.ReadLine(), out int RstCategory);
+                    foreach (var category in Enums)
+                    {
+                        Console.WriteLine((int)category + "." + category);
+                    }
+                    int.TryParse(Console.ReadLine(), out RstCategory);
+                try
+                {
+                    Enums.GetValue(RstCategory - 1);
+                    break;
+                }
 
-            try
-            {
-                Enums.GetValue(RstCategory - 1);
-            }
-            catch (Exception)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Enter Right Restaurant's Category");
-                return;
-
+                catch (Exception)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Something wrong!Try Again!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
 
             double rating;
@@ -236,14 +330,21 @@ namespace BoltFood.Service.Services.Implementations
         }
         private async Task UpdateRestaurant()
         {
-             if( !await CheckRestaurant())
+            if (!await CheckRestaurant())
             {
                 return;
             }
+
             Console.ForegroundColor = ConsoleColor.White;
+
 
             Console.WriteLine("Enter Restaurant's Id:");
             int.TryParse(Console.ReadLine(), out int id);
+
+            if (!await CheckId(id))
+            {
+                return;
+            }
 
             string name;
             do
@@ -264,8 +365,15 @@ namespace BoltFood.Service.Services.Implementations
             {
                 return;
             }
+
             Console.WriteLine("Enter Restaurant's Id:");
             int.TryParse(Console.ReadLine(), out int id);
+
+            if (!await CheckId(id))
+            {
+                return;
+            } 
+
 
             string message = await _restaurantService.RemoveAsync(id);
             Console.WriteLine(message);
@@ -274,6 +382,12 @@ namespace BoltFood.Service.Services.Implementations
         private async Task CreateProduct()
         {
             Console.ForegroundColor = ConsoleColor.White;
+
+            if (!await CheckRestaurant())
+            {
+                return;
+            }
+
             string name;
             do
             {
@@ -295,31 +409,40 @@ namespace BoltFood.Service.Services.Implementations
             while (!CheckPrice(price));
 
             Console.WriteLine("Enter Restaurant's Id:");
-            int.TryParse(Console.ReadLine(), out int RestaurantId);
+            int.TryParse(Console.ReadLine(), out int id);
 
-            Console.WriteLine("Choose Restaurant's Category");
-            var Enums = Enum.GetValues(typeof(ProductCategory));
-
-            foreach (var category in Enums)
+            if (!await CheckId(id))
             {
-                Console.WriteLine((int)category + "." + category);
-
-            }
-            int.TryParse(Console.ReadLine(), out int PrdctCategory);
-
-            try
-            {
-                Enums.GetValue(PrdctCategory - 1);
-            }
-            catch (Exception)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Enter Right Product Category");
                 return;
-
             }
 
-            string message = await _productService.CreateAsync(name, price, RestaurantId, (ProductCategory)PrdctCategory);
+            int PrdctCategory;
+            while (true)
+            {
+                Console.WriteLine("Choose Restaurant's Category");
+                var Enums = Enum.GetValues(typeof(ProductCategory));
+
+                foreach (var category in Enums)
+                {
+                    Console.WriteLine((int)category + "." + category);
+
+                }
+                int.TryParse(Console.ReadLine(), out PrdctCategory);
+
+                try
+                {
+                    Enums.GetValue(PrdctCategory - 1);
+                    break;
+                }
+                catch (Exception)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Enter Right Product Category");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+
+            string message = await _productService.CreateAsync(name, price, id, (ProductCategory)PrdctCategory);
             Console.WriteLine(message);
 
         }
@@ -330,6 +453,7 @@ namespace BoltFood.Service.Services.Implementations
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("We have not any Products!");
+                Console.ForegroundColor = ConsoleColor.White;
             }
             Console.ForegroundColor = ConsoleColor.Cyan;
 
@@ -358,8 +482,15 @@ namespace BoltFood.Service.Services.Implementations
                 return;
             }
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Enter Product's Id:");
-            int.TryParse(Console.ReadLine(), out int id);
+
+          
+                Console.WriteLine("Enter Product's Id:");
+                int.TryParse(Console.ReadLine(), out int id);
+
+            if (!await CheckId(id))
+            {
+                return;
+            }
 
             string name;
             do
@@ -384,10 +515,7 @@ namespace BoltFood.Service.Services.Implementations
                 return;
             }
             Console.ForegroundColor = ConsoleColor.White;
-            if (!await CheckProduct())
-            {
-                return;
-            }
+           
             Console.WriteLine("Enter Product's Id:");
             int.TryParse(Console.ReadLine(), out int id);
 
